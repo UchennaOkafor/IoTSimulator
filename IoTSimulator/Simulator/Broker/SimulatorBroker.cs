@@ -33,21 +33,21 @@ namespace Simulator.Broker
             return JsonConvert.DeserializeObject<Device[]>(httpClient.GetStringAsync("active_devices").Result);
         }
 
-        public void SendSimulatedData(IoTDevice[] devices)
+        public bool PostDeviceData(IoTDevice[] devices)
         {
-            var body = new List<Dictionary<string, string>>();
+            var jsonPayload = new List<Dictionary<string, string>>();
 
             foreach (var device in devices)
             {
-                body.Add(new Dictionary<string, string>()
+                jsonPayload.Add(new Dictionary<string, string>()
                 {
                     {"user_device_id", device.Id.ToString() },
                     {"raw_data", JsonConvert.SerializeObject(device) }
                 });
             }
 
-            var stringContent = new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json");
-            var b = httpClient.PostAsync($"devices/simulate", stringContent).Result.IsSuccessStatusCode;       
+            var stringContent = new StringContent(JsonConvert.SerializeObject(jsonPayload), Encoding.UTF8, "application/json");
+            return httpClient.PostAsync($"simulate", stringContent).Result.IsSuccessStatusCode;       
         }
     }
 }

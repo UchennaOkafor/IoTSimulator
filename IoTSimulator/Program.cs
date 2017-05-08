@@ -7,12 +7,6 @@ namespace IoTSimulator
     {
         static void Main(string[] args)
         {
-            Console.Title = "IoT Simulator";
-
-            var simulator = new DeviceSimulator();
-            simulator.RunSimulation();
-
-            Console.ReadLine();
         }
     }
 }

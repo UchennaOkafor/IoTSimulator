@@ -2,21 +2,23 @@
 using Simulator.Base;
 using System.Collections.Generic;
 using System.Timers;
+using System;
 
 namespace Simulator.Module
 {
-    class DeviceSimulator
+    public class DeviceSimulator
     {
-        private IoTDevice[] currentActiveDevices;
+        private Random rand;
+        private IoTDevice[] currentDevices;
         private SimulatorBroker broker;
         private Timer timer;
 
-        public DeviceSimulator()
+        public DeviceSimulator(int timerInterval)
         {
+            rand = new Random();
             broker = new SimulatorBroker();
-            timer = new Timer() { Interval = 1000 };
+            timer = new Timer() { Interval = timerInterval };
             UpdateVirtualDevices();
-            broker.SendSimulatedData(currentActiveDevices);
         }
 
         public void RunSimulation()
@@ -25,9 +27,18 @@ namespace Simulator.Module
             {
                 //Simulate stuff
                 //Send stuff
+                broker.PostDeviceData(currentDevices);
             };
 
             timer.Start();
+        }
+
+        private void SimulateNext()
+        {
+            foreach (var device in currentDevices)
+            {
+
+            }
         }
 
         private void UpdateVirtualDevices()
@@ -40,7 +51,8 @@ namespace Simulator.Module
                     case "Lightbulb":
                         virtualDevices.Add(new LightBulb()
                         {
-                            Id = device.Id
+                            Id = device.Id,
+                            Luminance = rand.Next(3, 5)
                         });
                         break;
 
@@ -60,7 +72,7 @@ namespace Simulator.Module
                 }
             }
 
-            currentActiveDevices = virtualDevices.ToArray();
+            currentDevices = virtualDevices.ToArray();
         }
 
         public void StopSimulation()
