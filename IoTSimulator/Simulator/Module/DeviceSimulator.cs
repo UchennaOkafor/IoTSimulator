@@ -3,30 +3,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Timers;
 
 namespace IoTSimulator.Simulator
 {
     class DeviceSimulator
     {
-        private bool stopped;
-        private Device[] actualDevices;
+        private Device[] currentActiveDevices;
         private SimulatorBroker broker;
+        private Timer timer;
 
         public DeviceSimulator()
         {
             broker = new SimulatorBroker();
+            timer = new Timer() { Interval = 1000 };
         }
 
         public void RunSimulation()
         {
             var activeDevices = broker.GetActiveDevices();
-            while (!stopped)
-            {
 
-            }
+            timer.Elapsed += (s, e) =>
+            {
+                //Simulate stuff
+                //Send stuff
+            };
+
+            timer.Start();
         }
 
-        private Device[] CreateVirtualDevices(Device[] devices)
+        private List<Device> CreateVirtualDevices(Device[] devices)
         {
             var virtualDevices = new List<Device>();
             foreach (Device device in virtualDevices)
@@ -36,19 +42,22 @@ namespace IoTSimulator.Simulator
                     case "Lightbulb":
                         virtualDevices.Add(new LightBulb()
                         {
-
+                            Id = device.Id
                         });
                         break;
 
                     case "Thermostat":
-                        virtualDevices.Add(new LightBulb()
+                        virtualDevices.Add(new Thermostat()
                         {
-
+                            Id = device.Id
                         });
                         break;
 
                     case "Fridge":
-                        //new
+                        virtualDevices.Add(new Fridge()
+                        {
+                            Id = device.Id
+                        });
                         break;
                 }
             }
@@ -58,7 +67,7 @@ namespace IoTSimulator.Simulator
 
         public void StopSimulation()
         {
-
+            timer.Stop();
         }
     }
 }

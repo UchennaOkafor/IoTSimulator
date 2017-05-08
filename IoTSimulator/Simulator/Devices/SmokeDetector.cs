@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IoTSimulator.Simulator
 {
-    class SmokeDetector
+    class SmokeDetector : Device
     {
         public int SmokeLevel { get; set; }
 

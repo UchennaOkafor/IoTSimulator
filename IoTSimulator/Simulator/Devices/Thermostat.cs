@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IoTSimulator
 {
-    public class Thermostat
+    public class Thermostat : Device
     {
         public int Temperature { get; set; }
 

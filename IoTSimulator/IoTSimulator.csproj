@@ -60,7 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Simulator\DeviceSimulator.cs" />
+    <Compile Include="Simulator\Module\DeviceSimulator.cs" />
     <Compile Include="Simulator\Devices\Base\Device.cs" />
     <Compile Include="Simulator\Devices\Fridge.cs" />
     <Compile Include="Simulator\Broker\SimulatorBroker.cs" />
@@ -69,14 +69,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Simulator\Devices\Thermostat.cs" />
     <Compile Include="Simulator\DeviceType.cs" />
-    <Compile Include="Simulator\SmokeDetector.cs" />
+    <Compile Include="Simulator\Devices\SmokeDetector.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Simulator\Module\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
       <Visible>False</Visible>
