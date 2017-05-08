@@ -1,15 +1,13 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Simulator.Broker;
+using Simulator.Base;
 using System.Collections.Generic;
 using System.Timers;
 
-namespace IoTSimulator.Simulator
+namespace Simulator.Module
 {
     class DeviceSimulator
     {
-        private Device[] currentActiveDevices;
+        private IoTDevice[] currentActiveDevices;
         private SimulatorBroker broker;
         private Timer timer;
 
@@ -17,12 +15,12 @@ namespace IoTSimulator.Simulator
         {
             broker = new SimulatorBroker();
             timer = new Timer() { Interval = 1000 };
+            UpdateVirtualDevices();
+            broker.SendSimulatedData(currentActiveDevices);
         }
 
         public void RunSimulation()
         {
-            var activeDevices = broker.GetActiveDevices();
-
             timer.Elapsed += (s, e) =>
             {
                 //Simulate stuff
@@ -32,12 +30,12 @@ namespace IoTSimulator.Simulator
             timer.Start();
         }
 
-        private List<Device> CreateVirtualDevices(Device[] devices)
+        private void UpdateVirtualDevices()
         {
-            var virtualDevices = new List<Device>();
-            foreach (Device device in virtualDevices)
+            var virtualDevices = new List<IoTDevice>();
+            foreach (Device device in broker.GetActiveDevices())
             {
-                switch (device.Type)
+                switch (device.DeviceType)
                 {
                     case "Lightbulb":
                         virtualDevices.Add(new LightBulb()
@@ -62,7 +60,7 @@ namespace IoTSimulator.Simulator
                 }
             }
 
-            return virtualDevices;
+            currentActiveDevices = virtualDevices.ToArray();
         }
 
         public void StopSimulation()

@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 
-namespace IoTSimulator.Simulator
+namespace Simulator.Base
 {
-    class SmokeDetector : Device
+    class SmokeDetector : IoTDevice
     {
+        [JsonProperty(PropertyName = "smoke_level")]
         public int SmokeLevel { get; set; }
 
+
+        [JsonProperty(PropertyName = "battery_level")]
         public int BatteryLevel { get; set; }
     }
 }

@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 
-namespace IoTSimulator
+namespace Simulator.Base
 {
-    public class Fridge : Device
+    public class Fridge : IoTDevice
     {
-        public int BottomTemperature { get; set; }
-
+        [JsonProperty(PropertyName = "top_temperature")]
         public int TopTemperature { get; set; }
+
+
+        [JsonProperty(PropertyName = "bottom_temperature")]
+        public int BottomTemperature { get; set; }
     }
 }

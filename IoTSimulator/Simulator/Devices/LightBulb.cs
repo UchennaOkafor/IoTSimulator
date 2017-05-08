@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Script.Serialization;
+﻿using Newtonsoft.Json;
 
-namespace IoTSimulator
+namespace Simulator.Base
 {
-    public class LightBulb : Device
+    public class LightBulb : IoTDevice
     {
+        [JsonProperty(PropertyName = "luminance")]
         public int Luminance { get; set; }
 
+
+        [JsonProperty(PropertyName = "current")]
         public int Current { get; set; }
     }
 }

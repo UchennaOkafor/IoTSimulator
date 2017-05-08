@@ -1,23 +1,22 @@
 ﻿using System;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Net.Http.Headers;
 using System.Collections.Generic;
-using System.Web.Script.Serialization;
+using System.Text;
+using Newtonsoft.Json;
+using Simulator.Base;
 
-namespace IoTSimulator
+namespace Simulator.Broker
 {
     public class SimulatorBroker
     {
         private HttpClient httpClient;
-        private JavaScriptSerializer jss;
         private readonly string apiKey, baseUrl;
 
         public SimulatorBroker()
         {
             apiKey = "Kappa";
             baseUrl = "http://localhost.:8000/things/api/";
-            jss = new JavaScriptSerializer();
             InitializeHttpClient();
         }
 
@@ -31,23 +30,24 @@ namespace IoTSimulator
 
         public Device[] GetActiveDevices()
         {
-            return jss.Deserialize<Device[]>(httpClient.GetStringAsync("active_devices").Result);
+            return JsonConvert.DeserializeObject<Device[]>(httpClient.GetStringAsync("active_devices").Result);
         }
 
-        public bool CreateProjectSets(int projectId, List<int> setIds)
+        public void SendSimulatedData(IoTDevice[] devices)
         {
-            var body = new Dictionary<string, string>()
+            var body = new List<Dictionary<string, string>>();
+
+            foreach (var device in devices)
             {
-                {"XY" , "HI"},
-                //{"XY" , "Bye"},
-            };
+                body.Add(new Dictionary<string, string>()
+                {
+                    {"user_device_id", device.Id.ToString() },
+                    {"raw_data", JsonConvert.SerializeObject(device) }
+                });
+            }
 
-            return httpClient.PostAsync($"devices/simulate", new FormUrlEncodedContent(body)).Result.IsSuccessStatusCode;
-        }
-
-        public bool SendSimulatedData(Device device)
-        {
-            return true;
+            var stringContent = new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json");
+            var b = httpClient.PostAsync($"devices/simulate", stringContent).Result.IsSuccessStatusCode;       
         }
     }
 }
