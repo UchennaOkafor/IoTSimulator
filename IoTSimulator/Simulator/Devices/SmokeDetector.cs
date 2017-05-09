@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace Simulator.Base
 {
@@ -10,5 +11,10 @@ namespace Simulator.Base
 
         [JsonProperty(PropertyName = "battery_level")]
         public int BatteryLevel { get; set; }
+
+        public override void SimulateNextReading()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

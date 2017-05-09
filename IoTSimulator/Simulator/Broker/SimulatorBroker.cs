@@ -12,6 +12,7 @@ namespace Simulator.Broker
     {
         private HttpClient httpClient;
         private readonly string apiKey, baseUrl;
+        private Device[] activeDevices;
 
         public SimulatorBroker()
         {
@@ -30,7 +31,7 @@ namespace Simulator.Broker
 
         public Device[] GetActiveDevices()
         {
-            return JsonConvert.DeserializeObject<Device[]>(httpClient.GetStringAsync("active_devices").Result);
+            return activeDevices = JsonConvert.DeserializeObject<Device[]>(httpClient.GetStringAsync("active_devices").Result);
         }
 
         public bool PostDeviceData(IoTDevice[] devices)
@@ -47,7 +48,10 @@ namespace Simulator.Broker
             }
 
             var stringContent = new StringContent(JsonConvert.SerializeObject(jsonPayload), Encoding.UTF8, "application/json");
-            return httpClient.PostAsync($"simulate", stringContent).Result.IsSuccessStatusCode;       
+            var activeDevicesJson = httpClient.PostAsync($"simulate", stringContent).Result.Content.ReadAsStringAsync().Result;
+            activeDevices = JsonConvert.DeserializeObject<Device[]>(activeDevicesJson);
+
+            return true;
         }
     }
 }

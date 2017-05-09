@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Simulator\Devices\Base\IoTDevice.cs" />
+    <Compile Include="Simulator\Devices\SmartMeter.cs" />
     <Compile Include="Simulator\Module\DeviceSimulator.cs" />
     <Compile Include="Simulator\Devices\Base\Device.cs" />
     <Compile Include="Simulator\Devices\Fridge.cs" />

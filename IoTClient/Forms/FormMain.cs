@@ -1,26 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using Simulator.Module;
+using System.Windows.Forms;
 
 namespace IoTClient.Forms
 {
     public partial class FormMain : Form
     {
+        private DeviceSimulator simulator;
+
         public FormMain()
         {
             InitializeComponent();
-
             int timerInterval = 2000;
-            var d = new DeviceSimulator(timerInterval);
+            simulator = new DeviceSimulator(timerInterval);
+        }
 
-            d.RunSimulation();
+        public void btnStart_Click(object sender, EventArgs e)
+        {
+            simulator.RunSimulation(); 
+        }
+
+        public void btnStop_Click(object sender, EventArgs e)
+        {
+            simulator.StopSimulation();
         }
     }
 }
