@@ -11,18 +11,41 @@ namespace IoTClient.Forms
         public FormMain()
         {
             InitializeComponent();
-            int timerInterval = 2000;
-            simulator = new DeviceSimulator(timerInterval);
+            simulator = new DeviceSimulator(Convert.ToInt32(nudInterval.Value));
+            simulator.OnDataSent += (o, e) =>
+            {
+                SetStatus("Data sent to server");
+            };
         }
 
         public void btnStart_Click(object sender, EventArgs e)
         {
-            simulator.RunSimulation(); 
+            simulator.RunSimulation();
+            SetState(false);
+            SetStatus("Working...");
         }
 
         public void btnStop_Click(object sender, EventArgs e)
         {
             simulator.StopSimulation();
+            SetState(true);
+            SetStatus("Idle...");
+        }
+
+        private void SetState(bool isActive)
+        {
+            btnStart.Enabled = isActive;
+            btnStop.Enabled = ! isActive;
+        }
+
+        private void SetStatus(string text)
+        {
+            lblStatus.Text = $"[{DateTime.Now}] - Status: {text}";
+        }
+
+        private void nudInterval_ValueChanged(object sender, EventArgs e)
+        {
+            simulator.Interval = Convert.ToInt32(nudInterval.Value);
         }
     }
 }
