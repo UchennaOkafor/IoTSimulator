@@ -27,6 +27,7 @@ namespace Simulator.Module
             {
                 //Simulate stuff
                 //Send stuff
+                SimulateNext();
                 broker.PostDeviceData(currentDevices);
             };
 
@@ -37,7 +38,20 @@ namespace Simulator.Module
         {
             foreach (var device in currentDevices)
             {
+                if (device is LightBulb)
+                {
+                    var lb = device as LightBulb;
+                    lb.Luminance = rand.Next(1, 5);
+                    lb.Current = rand.Next(1, 20);
+                }
+                else if (device is Thermostat)
+                {
 
+                }
+                else if (device is Fridge)
+                {
+
+                }
             }
         }
 

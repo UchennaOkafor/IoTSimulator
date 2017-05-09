@@ -17,11 +17,10 @@ namespace IoTClient.Forms
         {
             InitializeComponent();
 
-            //int timerInterval = 5000;
-            //var d = new DeviceSimulator(timerInterval);
+            int timerInterval = 2000;
+            var d = new DeviceSimulator(timerInterval);
 
-            //d.RunSimulation();
-
+            d.RunSimulation();
         }
     }
 }

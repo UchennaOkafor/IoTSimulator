@@ -35,13 +35,13 @@ namespace Simulator.Broker
 
         public bool PostDeviceData(IoTDevice[] devices)
         {
-            var jsonPayload = new List<Dictionary<string, string>>();
+            var jsonPayload = new List<Dictionary<string, object>>();
 
             foreach (var device in devices)
             {
-                jsonPayload.Add(new Dictionary<string, string>()
+                jsonPayload.Add(new Dictionary<string, object>()
                 {
-                    {"user_device_id", device.Id.ToString() },
+                    {"user_device_id", device.Id},
                     {"raw_data", JsonConvert.SerializeObject(device) }
                 });
             }
