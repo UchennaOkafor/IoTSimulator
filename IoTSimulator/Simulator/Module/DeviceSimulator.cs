@@ -9,8 +9,6 @@ namespace Simulator.Module
 {
     public class DeviceSimulator
     {
-        public int Interval { get; set; }
-
         private List<IoTDevice> currentDevices;
         private SimulatorBroker broker;
         private Timer timer;
@@ -20,9 +18,10 @@ namespace Simulator.Module
 
         public DeviceSimulator(int timerInterval)
         {
+            timer = new Timer() { Interval = timerInterval };
             currentDevices = new List<IoTDevice>();
             broker = new SimulatorBroker();
-            timer = new Timer() { Interval = timerInterval };
+
             InitializeDevices();
 
             timer.Elapsed += (s, e) =>
@@ -43,7 +42,7 @@ namespace Simulator.Module
                     }
                 }
 
-                for (int i = 0; i < currentDevices.Count - 1; i++)
+                for (int i = 0; i < currentDevices.Count; i++)
                 {
                     //Device no longer is turned on, so therefore remove it and don't simulate data for it
                     if (! newDevices.Exists(d => d.Id == currentDevices[i].Id))

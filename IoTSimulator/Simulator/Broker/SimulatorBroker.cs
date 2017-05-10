@@ -11,11 +11,10 @@ namespace Simulator.Broker
     public class SimulatorBroker
     {
         private HttpClient httpClient;
-        private readonly string apiKey, baseUrl;
+        private readonly string baseUrl;
 
         public SimulatorBroker()
         {
-            apiKey = "Kappa";
             baseUrl = "http://localhost.:8000/things/api/";
             InitializeHttpClient();
         }
@@ -25,7 +24,6 @@ namespace Simulator.Broker
             httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(baseUrl);
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            httpClient.DefaultRequestHeaders.Add("API-Key", apiKey);
         }
 
         public List<Device> GetActiveDevices()
