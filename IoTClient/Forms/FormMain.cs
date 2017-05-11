@@ -13,16 +13,19 @@ namespace IoTClient.Forms
         {
             InitializeComponent();
             SetStatus("Ready...");
-
-            simulator = new DeviceSimulator(Convert.ToInt32(nudInterval.Value));
-            simulator.OnDataSent += (o, e) =>
-            {
-                SetStatus($"Simulated data {++counter} sent to server");
-            };
         }
 
         public void btnStart_Click(object sender, EventArgs e)
         {
+            if (simulator == null)
+            {
+                simulator = new DeviceSimulator(Convert.ToInt32(nudInterval.Value));
+                simulator.OnDataSent += (o, e2) =>
+                {
+                    SetStatus($"Simulated data {++counter} sent to server");
+                };
+            }
+
             simulator.RunSimulation();
             SetState(false);
             SetStatus("Warming up...");

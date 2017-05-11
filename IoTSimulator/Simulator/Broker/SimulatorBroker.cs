@@ -15,7 +15,7 @@ namespace Simulator.Broker
 
         public SimulatorBroker()
         {
-            baseUrl = "http://localhost.:8000/things/api/";
+            baseUrl = "http://192.168.0.53:8000/things/api/";
             InitializeHttpClient();
         }
 
