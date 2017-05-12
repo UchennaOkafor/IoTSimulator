@@ -9,7 +9,6 @@ When the program is turned on, it makes a GET request to the servers API endpoin
 <br>
 <b>GET</b>
 /api/active_devices<br>
-x
 ```json
 [  
    {  
@@ -44,7 +43,6 @@ The program will then create an array of  devices based on the device type of ea
 <br>
 <b>POST</b>
 /api/simulate/<br>
-x
 ```json
 [  
    {  
