@@ -1,10 +1,12 @@
 # IoTSimulator
-[Description here]
+This application operates in conjunction with the [things](https://github.com/uche1/things/) web based application. The aim of this program is to simulate real life IoT devices.
 
-https://github.com/uche1/things/
+## GUI
+<img src="http://i.imgur.com/gIusxuC.png">
 
 ## Fetching data
-[Description here]<br>
+When the program is turned on, it makes a GET request to the servers API endpoint requesting for a list of devices that are switched on. 
+<br>
 <b>GET</b>
 /api/active_devices<br>
 x
@@ -38,7 +40,8 @@ x
 ```
 
 ## Simulating data
-[Description here]<br>
+The program will then create an array of  devices based on the device type of each JSON object and it will periodically simulate data for each device type.
+<br>
 <b>POST</b>
 /api/simulate/<br>
 x
@@ -70,6 +73,3 @@ x
    }
 ]
 ```
-
-### More
-x
